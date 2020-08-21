@@ -137,9 +137,10 @@
             };
         },
         methods: {
+            //cambo de iltros
             changeFilter()
             {
-                this.loadItems();
+                this.loadItems(); //carga los items de la tabla
             },
             resetModal() {
                 //this.model={};
@@ -151,13 +152,13 @@
                 // Trigger submit handler
                 this.saveItem();
             },
-            loadItem(id)
+            loadItem(id)//carga solo un objecto de acuerdo al ID para modificarlo
             {
                 this.isLoading=true;
                 this.axios.get( 'users/'+id)
                     .then( (response) =>{
-                        this.model=response.data;
-                        this.$bvModal.show('frmUser')
+                        this.model=response.data; // asigna la variable model al objecto usuario cargado
+                        this.$bvModal.show('frmUser') // muestra el modal
                     })
                     .catch((error) =>{
                         console.log(error)
@@ -168,7 +169,7 @@
                     });
 
             },
-            saveItem()
+            saveItem() //guarda el usuario
             {
                 this.isLoading=true;
                 this.axios.post( 'users',this.model)
@@ -189,7 +190,7 @@
                     });
 
             },
-            onSearch :function(params)
+            onSearch :function(params) //evento de vuegoodtable
             {
                 this.updateParams({page: params.page});
                 this.updateParams({searchTerm: params.searchTerm});
@@ -198,21 +199,21 @@
             say: function (message) {
                 alert(message)
             },
-            updateParams(newProps) {
+            updateParams(newProps) {//evento de vuegoodtable
                 this.serverParams = Object.assign({}, this.serverParams, newProps);
             },
 
-            onPageChange(params) {
+            onPageChange(params) {//evento de vuegoodtable
                 this.updateParams({page: params.currentPage});
                 this.loadItems();
             },
 
-            onPerPageChange(params) {
+            onPerPageChange(params) {//evento de vuegoodtable
                 this.updateParams({perPage: params.currentPerPage});
                 this.loadItems();
             },
 
-            onSortChange(params) {
+            onSortChange(params) {//evento de vuegoodtable
                 this.updateParams({
                     sort: [{
                         type: params.sortType,
@@ -222,12 +223,12 @@
                 this.loadItems();
             },
 
-            onColumnFilter(params) {
+            onColumnFilter(params) {//evento de vuegoodtable
                 this.updateParams(params);
                 this.loadItems();
             },
             // load items is what brings back the rows from server
-            loadItems() {
+            loadItems() { //carga todos los items
 
                 /*getFromServer(this.serverParams).then(response => {
                     this.totalRecords = response.totalRecords;
@@ -253,7 +254,7 @@
             }
 
         },
-        mounted() {
+        mounted() { //carga los items cuando termina de cargar el componente
             this.loadItems();
         }
     };

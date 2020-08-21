@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-    function table(Request $request)
+    function table(Request $request)// en caso de que haya el filtro de  filterStatus Filtrar o searchText
     {
 
         $searchText=$request->searchTerm;
         $status=$request->filterStatus;
         $data=DB::table('users')
-            ->where(function ($query) use ($searchText)
+            ->where(function ($query) use ($searchText)//filtro de nombre
             {
                 if(empty($searchText) || trim($searchText)=="")
                 {
@@ -30,7 +30,7 @@ class UserController extends Controller
                     return $query->where('users.name','like',"%{$searchText}%");
                 }
             })
-            ->where(function ($query) use ($status)
+            ->where(function ($query) use ($status) //filtro de estado
             {
                 if($status=="-1")
                 {
@@ -48,12 +48,11 @@ class UserController extends Controller
         return $data;
 
     }
-    function update(Request $request)
+
+
+    function store(Request $request) // guardar el usuario de acuerdo al ID, pasado por VUE
     {
 
-    }
-    function store(Request $request)
-    {
         $id=$request->id;
         $user=User::find($id);
         $user->name=$request->name;
